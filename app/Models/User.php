@@ -13,11 +13,7 @@ class User extends Model
         'name',
         'email',
         'age',
+        'phone_number'
     ];
-
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class);
-    }
 }
 
