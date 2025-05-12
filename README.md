@@ -69,28 +69,8 @@ Sebelum menjalankan proyek ini, pastikan Anda sudah menginstal:
 
 API sekarang dapat diakses melalui `http://localhost:8000`.
 
-## Dokumentasi API
+## Dokumentasi & Penggunaan API
 
 Untuk dokumentasi API lengkap, buka **Swagger UI** yang disediakan pada URL berikut:  
 http://localhost:8000/api/documentation
-
-## Penggunaan API
-
-### 1. Mendapatkan Daftar Pengguna
-`GET /api/users`
-
-Mengambil semua pengguna yang ada dalam database.
-
-#### Response:
-```json
-[
-    {
-        "id": 1,
-        "name": "Azhar",
-        "email": "azhar@gmail.com",
-        "age": 30,
-        "phone_number": "087862811"
-    },
-    ...
-]
 
