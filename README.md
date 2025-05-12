@@ -72,7 +72,7 @@ API sekarang dapat diakses melalui `http://localhost:8000`.
 ## Dokumentasi API
 
 Untuk dokumentasi API lengkap, buka **Swagger UI** yang disediakan pada URL berikut:  
-[**API Documentation**](http://localhost:8000/api/documentation)
+http://localhost:8000/api/documentation
 
 ## Penggunaan API
 
