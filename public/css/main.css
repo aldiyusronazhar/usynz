@@ -349,7 +349,16 @@ body {
 
 
 /* Responsive Styles */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
+
+    .edit,
+    .delete {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
     .top {
         flex-direction: column;
         align-items: flex-start;
@@ -389,6 +398,7 @@ body {
     .info p {
         font-size: 12px;
     }
+
     .info span {
         display: none;
     }

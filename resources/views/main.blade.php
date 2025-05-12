@@ -162,7 +162,7 @@
                     <td>${new Date(user.created_at).toLocaleDateString()}<br>
                         <span class="time">${new Date(user.updated_at).toLocaleString()}</span>
                     </td>
-                    <td>
+                    <td class="action_btn">
                         <button class="edit" data-id="${user.id}">Edit</button>
                         <button class="delete" data-id="${user.id}">Delete</button>
                     </td>
