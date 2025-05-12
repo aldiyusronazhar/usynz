@@ -389,6 +389,9 @@ body {
     .info p {
         font-size: 12px;
     }
+    .info span {
+        display: none;
+    }
 
     .table-container {
         width: 100%;

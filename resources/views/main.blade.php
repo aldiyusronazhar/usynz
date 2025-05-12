@@ -251,7 +251,7 @@
                 <button class="desc">DSC</button>
             </div>
             <div class="info">
-                <p>Limit requests to avoid egress costs!</p>
+                <p>Limit requests to avoid egress costs! <span>Trial users may experience slower requests.</span></p>
             </div>
         </div>
 
