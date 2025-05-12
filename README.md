@@ -7,7 +7,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-
 # Laravel User API
 
 API ini menyediakan endpoint untuk mengelola data pengguna. API mendukung operasi CRUD (Create, Read, Update, Delete) pada resource `User`. API ini menggunakan Laravel sebagai backend, dengan dokumentasi OpenAPI (Swagger) untuk memudahkan integrasi dan pengujian.
@@ -69,6 +68,11 @@ Sebelum menjalankan proyek ini, pastikan Anda sudah menginstal:
     ```
 
 API sekarang dapat diakses melalui `http://localhost:8000`.
+
+## Dokumentasi API
+
+Untuk dokumentasi API lengkap, buka **Swagger UI** yang disediakan pada URL berikut:  
+[**API Documentation**](http://localhost:8000/api/documentation)
 
 ## Penggunaan API
 
