@@ -1,13 +1,13 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.buildEnv {
-  name = "env";
+  name = "custom-laravel-env";
   paths = [
     pkgs.php
     pkgs.nodejs
     pkgs.pnpm
     (pkgs.composer.overrideAttrs (old: {
-      installPhase = old.installPhase + ''
+      postInstall = ''
         mv $out/LICENSE $out/LICENSE-composer
       '';
     }))

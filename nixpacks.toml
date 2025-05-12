@@ -1,0 +1,22 @@
+[nix]
+customPkgs = "./nixpkgs.nix"
+
+providers = ["php"]
+
+[phases.setup]
+nixPkgs = [
+  "php",
+  "php.packages.composer", # default composer
+  "nodejs",
+  "pnpm",
+]
+
+[phases.install]
+cmds = [
+  "composer install",
+  "pnpm install"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+
