@@ -1,4 +1,14 @@
 <?php
+/**
+ * @OA\Info(
+ *     title="User API",
+ *     version="1.0.0",
+ *     description="Dokumentasi Swagger untuk API User",
+ *     @OA\Contact(
+ *         email="aldiyusronazhar@gmail.com"
+ *     )
+ * )
+ */
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
