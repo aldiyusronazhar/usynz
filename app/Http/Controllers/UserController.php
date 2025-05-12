@@ -5,25 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use OpenApi\Annotations as OA;
 
 /**
- * @OA\Tag(
- *     name="Users",
- *     description="API Endpoints for Managing Users"
- * )
+ * @OA\Info(title="User API", version="1.0.0")
+ * @OA\Server(url="http://localhost/api")
  */
 class UserController extends Controller
 {
     /**
      * @OA\Get(
      *     path="/api/users",
+     *     summary="Get a list of users",
      *     tags={"Users"},
-     *     summary="Get all users",
-     *     @OA\Response(
-     *         response=200,
-     *         description="List of users"
-     *     )
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=400, description="Invalid request")
      * )
      */
     public function index()
@@ -35,22 +30,17 @@ class UserController extends Controller
     /**
      * @OA\Get(
      *     path="/api/users/{id}",
+     *     summary="Get a specific user by ID",
      *     tags={"Users"},
-     *     summary="Get user by ID",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *         description="User ID",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="User found"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="User not found"
-     *     )
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=404, description="User not found")
      * )
      */
     public function show($id)
@@ -64,26 +54,20 @@ class UserController extends Controller
     /**
      * @OA\Post(
      *     path="/api/users",
-     *     tags={"Users"},
      *     summary="Create a new user",
+     *     tags={"Users"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"name","email","age","phone_number"},
-     *             @OA\Property(property="name", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
-     *             @OA\Property(property="age", type="integer", example=25),
-     *             @OA\Property(property="phone_number", type="string", example="08123456789")
+     *             required={"name", "email", "age", "phone_number"},
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="age", type="integer"),
+     *             @OA\Property(property="phone_number", type="string")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="User created"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     )
+     *     @OA\Response(response=201, description="User created"),
+     *     @OA\Response(response=422, description="Validation errors")
      * )
      */
     public function store(Request $request)
@@ -108,36 +92,28 @@ class UserController extends Controller
     /**
      * @OA\Put(
      *     path="/api/users/{id}",
+     *     summary="Update an existing user",
      *     tags={"Users"},
-     *     summary="Update a user",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *         description="User ID",
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"name","email","age","phone_number"},
-     *             @OA\Property(property="name", type="string", example="Jane Doe"),
-     *             @OA\Property(property="email", type="string", format="email", example="jane@example.com"),
-     *             @OA\Property(property="age", type="integer", example=30),
-     *             @OA\Property(property="phone_number", type="string", example="08987654321")
+     *             required={"name", "email", "age", "phone_number"},
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="age", type="integer"),
+     *             @OA\Property(property="phone_number", type="string")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="User updated"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="User not found"
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error"
-     *     )
+     *     @OA\Response(response=200, description="User updated"),
+     *     @OA\Response(response=404, description="User not found"),
+     *     @OA\Response(response=422, description="Validation errors")
      * )
      */
     public function update(Request $request, $id)
@@ -149,7 +125,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,'.$id,
             'age' => 'required|integer',
             'phone_number' => 'required|string'
         ]);
@@ -165,22 +141,17 @@ class UserController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/users/{id}",
-     *     tags={"Users"},
      *     summary="Delete a user",
+     *     tags={"Users"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
+     *         description="User ID",
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="User deleted"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="User not found"
-     *     )
+     *     @OA\Response(response=200, description="User deleted"),
+     *     @OA\Response(response=404, description="User not found")
      * )
      */
     public function destroy($id)

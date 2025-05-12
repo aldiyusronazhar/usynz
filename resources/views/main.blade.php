@@ -6,125 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Manage Team</title>
     <link href="css/main.css" rel="stylesheet">
-    <style>
-        /* Style Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #111;
-            padding: 20px;
-            border: 1px solid #333;
-            border-radius: 7px;
-            width: 80%;
-            max-width: 400px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-        }
-
-        .form-group input {
-            background-color: #0b0b0b;
-            color: #fff;
-            width: 100%;
-            border: 1px solid #333;
-            padding: 7px 19px;
-            transition: 0.4s;
-            font-size: 18px;
-            border-radius: 7px;
-            transition: 0.4s;
-            height: 50px;
-        }
-
-        .form-group input:focus {
-            outline: 1px solid rgba(254, 61, 0, 0.1);
-            border: 1px solid rgba(254, 61, 0, 0.5);
-        }
-
-        .form-group label {
-            font-size: 14px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-cancel {
-            background-color: #0b0b0b;
-            color: #fff;
-            padding: 10px 20px;
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            cursor: pointer;
-            border-radius: 4px;
-            width: 100%;
-            transition: 0.4s;
-        }
-
-        .btn {
-            background-color: #0b0b0b;
-            color: white;
-            padding: 10px 20px;
-            border: 1px solid #333;
-            cursor: pointer;
-            border-radius: 4px;
-            width: 100%;
-            transition: 0.4s;
-        }
-
-        .btn:hover {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .btn-cancel:hover {
-            background-color: #ff0000;
-            color: #fff;
-        }
-
-        .team-table th,
-        .team-table td {
-            padding: 10px;
-            text-align: left;
-        }
-    </style>
 </head>
 
 <script>
@@ -134,13 +15,13 @@
         const modalForm = document.getElementById('userForm');
         const closeModalButton = document.querySelector('.close');
         const cancelModalButton = document.querySelector('.btn-cancel');
-        const addButton = document.querySelector('.top_right button'); // Button untuk tambah member
+        const addButton = document.querySelector('.top_right button');
         const userIdInput = document.getElementById('userId');
 
         const sortButtonASC = document.querySelector('.filter button.asc');
         const sortButtonDESC = document.querySelector('.filter button.desc');
         let usersData = [];
-        let isAsc = false; // Default urutkan terbaru (desc)
+        let isAsc = false; // Default (desc)
 
         addButton.addEventListener('click', () => showModal('add'));
 
@@ -209,7 +90,6 @@
 
             usersData = await res.json();
 
-            // Sort default by created_at DESC (terbaru)
             const sortedUsers = usersData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
             displayUsers(sortedUsers);
 
@@ -376,7 +256,6 @@
                 </div>
                 <div class="form-group">
                     <label for="phone_number">Phone Number:</label>
-                    <!-- <input type="text" id="phone_number" required> -->
                     <input type="text" id="phone_number" required minlength="10">
                 </div>
                 <div class="button-group">
