@@ -15,11 +15,21 @@
         const modalForm = document.getElementById('userForm');
         const closeModalButton = document.querySelector('.close');
         const cancelModalButton = document.querySelector('.btn-cancel');
-        const addButton = document.querySelector('.top_right button');
+        const addButton = document.querySelector('.add_btn');
         const userIdInput = document.getElementById('userId');
-
         const sortButtonASC = document.querySelector('.filter button.asc');
         const sortButtonDESC = document.querySelector('.filter button.desc');
+        const searchInput = document.querySelector('.filter input[type="text"]');
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredUsers = usersData.filter(user => {
+                return user.name.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm);
+            });
+            displayUsers(filteredUsers);
+        });
+
         let usersData = [];
         let isAsc = false; // Default (desc)
 
@@ -109,6 +119,35 @@
             displayUsers(sortedUsers);
         });
 
+        // Function to download CSV
+        const downloadCSV = () => {
+            const rows = [
+                ['No', 'Name', 'Email', 'Age', 'Created', 'Updated'] // header
+            ];
+
+            usersData.forEach((user, index) => {
+                rows.push([
+                    index + 1,
+                    user.name,
+                    user.email,
+                    user.age,
+                    new Date(user.created_at).toLocaleDateString(),
+                    new Date(user.updated_at).toLocaleString()
+                ]);
+            });
+
+            const csvContent = rows.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'users_data.csv';
+            link.click();
+        };
+
+        // Event listener for CSV download
+        const csvButton = document.querySelector('.top_right button:first-child');
+        csvButton.addEventListener('click', downloadCSV);
+
         function displayUsers(users) {
             tbody.innerHTML = ''; // clear loading state
             const fragment = document.createDocumentFragment();
@@ -116,18 +155,18 @@
             users.forEach((user, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${user.name}<br><span class="phone">${user.phone_number ?? '-'}</span></td>
-            <td>${user.email}</td>
-            <td><span class="badge">${user.age}</span></td>
-            <td>${new Date(user.created_at).toLocaleDateString()}<br>
-                <span class="time">${new Date(user.updated_at).toLocaleString()}</span>
-            </td>
-            <td>
-                <button class="edit" data-id="${user.id}">Edit</button>
-                <button class="delete" data-id="${user.id}">Delete</button>
-            </td>
-        `;
+                    <td>${index + 1}</td>
+                    <td>${user.name}<br><span class="phone">${user.phone_number ?? '-'}</span></td>
+                    <td>${user.email}</td>
+                    <td><span class="badge">${user.age}</span></td>
+                    <td>${new Date(user.created_at).toLocaleDateString()}<br>
+                        <span class="time">${new Date(user.updated_at).toLocaleString()}</span>
+                    </td>
+                    <td>
+                        <button class="edit" data-id="${user.id}">Edit</button>
+                        <button class="delete" data-id="${user.id}">Delete</button>
+                    </td>
+                `;
                 tr.querySelector('.edit').addEventListener('click', () => showModal('edit', user.id));
                 tr.querySelector('.delete').addEventListener('click', () => deleteUser(user.id));
 
@@ -136,7 +175,6 @@
 
             tbody.appendChild(fragment);
         }
-
     });
 
     function showModal(mode, userId = null) {
@@ -191,7 +229,6 @@
                 alert('Failed to delete user.');
             });
     }
-
 </script>
 
 <body>
@@ -199,10 +236,11 @@
         <div class="top">
             <div class="top_left">
                 <h1>Manage Your Team</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p>A simple web application to manage your team members:.</p>
             </div>
             <div class="top_right">
-                <button>Add Member</button>
+                <button>CSV</button>
+                <button class="add_btn">Add Member</button>
             </div>
         </div>
 
@@ -213,25 +251,27 @@
                 <button class="desc">DSC</button>
             </div>
             <div class="info">
-                <p>Please Lorem ipsum dolor sit Lorem, ipsum..</p>
+                <p>Limit requests to avoid egress costs!</p>
             </div>
         </div>
 
-        <table class="team-table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Age</th>
-                    <th>Created</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- User data will be injected here -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="team-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User data will be injected here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Modal Popup for Add/Edit User -->
