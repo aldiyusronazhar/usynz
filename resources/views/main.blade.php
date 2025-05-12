@@ -23,7 +23,7 @@
         .modal-content {
             background-color: #111;
             padding: 20px;
-            border: 1px solid #888;
+            border: 1px solid #333;
             border-radius: 7px;
             width: 80%;
             max-width: 400px;
@@ -32,6 +32,10 @@
             left: 50%;
             transform: translate(-50%, -50%);
             animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
         }
 
         .close {
@@ -50,6 +54,10 @@
 
         .form-group {
             margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 5px;
         }
 
         .form-group input {
@@ -58,27 +66,63 @@
             width: 100%;
             border: 1px solid #333;
             padding: 7px 19px;
+            transition: 0.4s;
             font-size: 18px;
             border-radius: 7px;
             transition: 0.4s;
             height: 50px;
         }
 
+        .form-group input:focus {
+            outline: 1px solid rgba(254, 61, 0, 0.1);
+            border: 1px solid rgba(254, 61, 0, 0.5);
+        }
+
         .form-group label {
-            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            background-color: #0b0b0b;
+            color: #fff;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            transition: 0.4s;
         }
 
         .btn {
-            background-color: #4CAF50;
+            background-color: #0b0b0b;
             color: white;
             padding: 10px 20px;
-            border: none;
+            border: 1px solid #333;
             cursor: pointer;
             border-radius: 4px;
+            width: 100%;
+            transition: 0.4s;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-cancel:hover {
+            background-color: #ff0000;
+            color: #fff;
+        }
+
+        .team-table th,
+        .team-table td {
+            padding: 10px;
+            text-align: left;
         }
     </style>
 </head>
@@ -89,12 +133,19 @@
         const modal = document.getElementById('userModal');
         const modalForm = document.getElementById('userForm');
         const closeModalButton = document.querySelector('.close');
+        const cancelModalButton = document.querySelector('.btn-cancel');
         const addButton = document.querySelector('.top_right button'); // Button untuk tambah member
         const userIdInput = document.getElementById('userId');
+
+        const sortButtonASC = document.querySelector('.filter button.asc');
+        const sortButtonDESC = document.querySelector('.filter button.desc');
+        let usersData = [];
+        let isAsc = false; // Default urutkan terbaru (desc)
 
         addButton.addEventListener('click', () => showModal('add'));
 
         closeModalButton.addEventListener('click', () => closeModal());
+        cancelModalButton.addEventListener('click', () => closeModal());
 
         modalForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -156,24 +207,47 @@
             const res = await fetch('/api/users');
             if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
 
-            const users = await res.json();
+            usersData = await res.json();
+
+            // Sort default by created_at DESC (terbaru)
+            const sortedUsers = usersData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            displayUsers(sortedUsers);
+
+        } catch (err) {
+            console.error('Error fetching users:', err);
+        }
+
+        sortButtonASC.addEventListener('click', () => {
+            isAsc = true;
+            const sortedUsers = [...usersData].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+            displayUsers(sortedUsers);
+        });
+
+        sortButtonDESC.addEventListener('click', () => {
+            isAsc = false;
+            const sortedUsers = [...usersData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            displayUsers(sortedUsers);
+        });
+
+        function displayUsers(users) {
             tbody.innerHTML = ''; // clear loading state
             const fragment = document.createDocumentFragment();
 
-            users.forEach(user => {
+            users.forEach((user, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                <td>${user.name}<br><span class="phone">${user.phone_number ?? '-'}</span></td>
-                <td>${user.email}</td>
-                <td><span class="badge">${user.age}</span></td>
-                <td>${new Date(user.created_at).toLocaleDateString()}<br>
-                    <span class="time">${new Date(user.updated_at).toLocaleString()}</span>
-                </td>
-                <td>
-                    <button class="edit" data-id="${user.id}">Edit</button>
-                    <button class="delete" data-id="${user.id}">Delete</button>
-                </td>
-            `;
+            <td>${index + 1}</td>
+            <td>${user.name}<br><span class="phone">${user.phone_number ?? '-'}</span></td>
+            <td>${user.email}</td>
+            <td><span class="badge">${user.age}</span></td>
+            <td>${new Date(user.created_at).toLocaleDateString()}<br>
+                <span class="time">${new Date(user.updated_at).toLocaleString()}</span>
+            </td>
+            <td>
+                <button class="edit" data-id="${user.id}">Edit</button>
+                <button class="delete" data-id="${user.id}">Delete</button>
+            </td>
+        `;
                 tr.querySelector('.edit').addEventListener('click', () => showModal('edit', user.id));
                 tr.querySelector('.delete').addEventListener('click', () => deleteUser(user.id));
 
@@ -181,10 +255,8 @@
             });
 
             tbody.appendChild(fragment);
-
-        } catch (err) {
-            console.error('Error fetching users:', err);
         }
+
     });
 
     function showModal(mode, userId = null) {
@@ -239,6 +311,7 @@
                 alert('Failed to delete user.');
             });
     }
+
 </script>
 
 <body>
@@ -256,8 +329,8 @@
         <div class="toolbar">
             <div class="filter">
                 <input type="text" placeholder="Search Here...">
-                <button>ASC</button>
-                <button>DSC</button>
+                <button class="asc">ASC</button>
+                <button class="desc">DSC</button>
             </div>
             <div class="info">
                 <p>Please Lorem ipsum dolor sit Lorem, ipsum..</p>
@@ -267,6 +340,7 @@
         <table class="team-table">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Age</th>
@@ -289,7 +363,8 @@
                 <input type="hidden" id="userId">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" required>
+                    <input type="text" id="name" required pattern="[A-Za-z\s]+"
+                        title="Name should only contain letters">
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -301,9 +376,13 @@
                 </div>
                 <div class="form-group">
                     <label for="phone_number">Phone Number:</label>
-                    <input type="text" id="phone_number" required>
+                    <!-- <input type="text" id="phone_number" required> -->
+                    <input type="text" id="phone_number" required minlength="10">
                 </div>
-                <button type="submit" class="btn">Save</button>
+                <div class="button-group">
+                    <button type="button" class="btn-cancel">cancel</button>
+                    <button type="submit" class="btn">Save</button>
+                </div>
             </form>
         </div>
     </div>
