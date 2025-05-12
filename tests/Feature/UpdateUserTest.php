@@ -18,15 +18,15 @@ class UpdateUserTest extends TestCase
     public function test_update_user()
     {
         $user = User::create([
-            'name' => 'Nasir Ceyo',
-            'email' => 'nasir.ceyo@example.com',
+            'name' => 'Azhar',
+            'email' => 'azhar@gmail.com',
             'phone_number' => '081234567890',
             'age' => 25,
         ]);
 
         $updateData = [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
+            'name' => 'Azhar Updated',
+            'email' => 'azhar.updated@gmail.com',
             'age' => 30,
             'phone_number' => '08123456789',
         ];

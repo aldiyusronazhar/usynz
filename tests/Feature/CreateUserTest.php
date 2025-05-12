@@ -18,8 +18,8 @@ class CreateUserTest extends TestCase
     public function test_create_user()
     {
         $data = [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
+            'name' => 'Azhar',
+            'email' => 'azhar@gmail.com',
             'age' => 30,
             'phone_number' => '08123456789',
         ];

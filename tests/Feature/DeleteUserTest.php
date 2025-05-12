@@ -18,8 +18,8 @@ class DeleteUserTest extends TestCase
     public function test_delete_user()
     {
         $user = User::create([
-            'name' => 'Nasir Ceyo',
-            'email' => 'nasir.ceyo@example.com',
+            'name' => 'Azhar',
+            'email' => 'azhar@gmail.com',
             'phone_number' => '081234567890',
             'age' => 25,
         ]);

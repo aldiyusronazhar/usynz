@@ -18,15 +18,15 @@ class ReadUserTest extends TestCase
     public function test_get_users_list()
     {
         User::create([
-            'name' => 'Nasir Ceyo',
-            'email' => 'nasir.ceyo@example.com',
+            'name' => 'Azhar',
+            'email' => 'azhar@gmail.com',
             'phone_number' => '081234567890',
             'age' => 25,
         ]);
 
         User::create([
             'name' => 'Ilham',
-            'email' => 'ilham@example.com',
+            'email' => 'ilham@gmail.com',
             'phone_number' => '081234567891',
             'age' => 30,
         ]);
@@ -44,8 +44,8 @@ class ReadUserTest extends TestCase
     public function test_get_user_by_id()
     {
         $user = User::create([
-            'name' => 'Nasir Ceyo',
-            'email' => 'nasir.ceyo@example.com',
+            'name' => 'Azhar',
+            'email' => 'azhar@gmail.com',
             'phone_number' => '081234567890',
             'age' => 25,
         ]);
