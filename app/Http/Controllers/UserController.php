@@ -30,7 +30,7 @@ class UserController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'age' => 'required|integer',
-            'phone_number' => 'required|string' // ✅ tambah validasi
+            'phone_number' => 'required|string'
         ]);
 
         if ($validator->fails()) {

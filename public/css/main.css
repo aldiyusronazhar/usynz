@@ -15,6 +15,7 @@ body {
 .container {
     width: 100vw;
     padding: 20px;
+     height: 100vh;
 }
 
 .top {
@@ -41,11 +42,12 @@ body {
 }
 
 .top_right button {
+    height: 50px;
     padding: 9px 14px;
     background-color: #111;
     border: 1px solid #333;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 18px;
     transition: 0.3s ease-in-out;
 }
 
@@ -56,7 +58,7 @@ body {
 
 
 .toolbar {
-    margin-top:50px;
+    margin-top: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,11 +67,157 @@ body {
 .filter {
     display: flex;
     justify-content: space-between;
+    gap: 15px;
 }
 
 .filter input {
     background-color: #0b0b0b;
     color: #fff;
+    width: 400px;
     border: 1px solid #333;
-    padding: 19px;
+    padding: 7px 19px;
+    font-size: 18px;
+    border-radius: 7px;
+    transition: 0.4s;
+    height: 50px;
 }
+
+.filter input:focus {
+    outline: 1px solid rgba(254, 61, 0, 0.1);
+    border: 1px solid rgba(254, 61, 0, 0.5);
+}
+
+.filter button {
+    background-color: #0b0b0b;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 7px 19px;
+    font-size: 16px;
+    border-radius: 7px;
+    transition: 0.3s ease-in-out;
+}
+
+.filter button:hover {
+    background-color: #fe3d00;
+    border: 1px solid #333;
+}
+
+.toolbar .info {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: #0b0b0b;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 7px 40px;
+    font-size: 16px;
+    border-radius: 7px;
+    transition: 0.4s;
+    height: 50px;
+
+}
+.info p {
+    position: relative;
+    padding-left: 40px;
+}
+
+.info p::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.team-table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+    background-color: #0b0b0b;
+    border: 1px solid #222;
+}
+
+.team-table th, .team-table td {
+    text-align: left;
+    padding: 14px 20px;
+    border-bottom: 1px solid #222;
+    vertical-align: center;
+}
+
+.team-table th {
+    background-color: #111;
+    font-weight: bold;
+}
+
+.team-table td .phone,
+.team-table td .time {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-top: 4px;
+}
+
+.badge {
+    background-color: #222;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.edit,
+.delete {
+    background-color: transparent;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 6px 14px;
+    font-size: 14px;
+    margin-right: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.edit:hover {
+    background-color: #555;
+}
+
+.delete {
+    color: #fe3d00;
+    border-color: #fe3d00;
+}
+
+.delete:hover {
+    background-color: #fe3d00;
+    color: #fff;
+}
+
+.team-table th:nth-child(1),
+.team-table td:nth-child(1) {
+    width: 20%;
+}
+
+.team-table th:nth-child(2),
+.team-table td:nth-child(2) {
+    width: 20%;
+}
+
+.team-table th:nth-child(3),
+.team-table td:nth-child(3) {
+    width: 20%;
+}
+
+.team-table th:nth-child(4),
+.team-table td:nth-child(4) {
+    width: 20%;
+}
+
+.team-table th:nth-child(5),
+.team-table td:nth-child(5) {
+    width: 15%;
+}
+
